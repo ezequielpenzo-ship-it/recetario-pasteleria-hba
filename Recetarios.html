@@ -557,7 +557,7 @@ function renderRecipe() {
       ${rec.yields.length > 1 ? '<div class="yc-hint" style="opacity:.6">+ ' + (rec.yields.length-1) + ' rendimientos más</div>' : ''}
       ${isYieldMode
         ? `<div class="yc-input-row" onclick="event.stopPropagation()">
-             <input class="yc-input" id="yi-inp" type="number" value="${S.targetYield}" min="1"
+             <input class="yc-input" id="yi-inp" type="text" inputmode="numeric" pattern="[0-9]*" value="${S.targetYield}"
                oninput="setYieldTarget(this.value)" onchange="setYieldTarget(this.value)">
              <span class="yc-unit" style="font-size:13px">${esc(y.label)}</span>
              <button class="yc-clear" onclick="clearYieldMode()">✕ cancelar</button>
@@ -593,8 +593,7 @@ function renderRecipe() {
       </div>
       <div class="sp-row" style="margin-top:8px">
         <span class="sp-label">Cantidad:</span>
-        <input class="sp-qty" id="qty-inp" type="number" value="${S.target ?? baseQty ?? ''}"
-          min="0" step="any"
+        <input class="sp-qty" id="qty-inp" type="text" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" value="${S.target ?? baseQty ?? ''}"
           oninput="changeTarget(this.value)" onchange="changeTarget(this.value)">
         <span class="sp-unit">${baseIng ? esc(baseIng.unit) : ''}</span>
         <span class="sp-factor ${factor === 1 ? 'base' : ''}">${factor === 1 ? '1×' : (factor >= 1 ? '×' : '×') + factor.toFixed(2).replace(/\.?0+$/,'')}</span>
