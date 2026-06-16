@@ -383,12 +383,14 @@ function buildNav() {
     const isOpen = S.openBooks[bk];
     const recList = bv.recipes ? bv.recipes
       : (S.section && bv.sections?.[S.section] ? bv.sections[S.section].recipes : []);
+    const totalCount = bv.recipes ? bv.recipes.length
+      : (bv.sections ? Object.values(bv.sections).reduce((s, sec) => s + sec.recipes.length, 0) : 0);
     const filtered = recList.filter(r => !filterLow || r.name.toLowerCase().includes(filterLow));
     const isCur = S.book === bk;
 
     html += `<div class="nb ${isCur || filterLow ? 'open' : ''}" onclick="toggleBook('${bk}')" id="nb-${bk}">
       <span class="arr">▶</span> ${esc(bv.label)}
-      <span style="margin-left:auto;font-size:10px;opacity:.5">${recList.length}</span>
+      <span style="margin-left:auto;font-size:10px;opacity:.5">${totalCount}</span>
     </div>`;
 
     // Section tabs for croutons
