@@ -528,7 +528,7 @@ function renderRecipe() {
       ${isYieldMode
         ? `<div class="yc-input-row" onclick="event.stopPropagation()">
              <input class="yc-input" id="yi-inp" type="number" value="${S.targetYield}" min="1"
-               onchange="setYieldTarget(this.value)" oninput="setYieldTarget(this.value)">
+               onchange="setYieldTarget(this.value)" onkeydown="if(event.key==='Enter')setYieldTarget(this.value)">
              <span class="yc-unit" style="font-size:13px">${esc(y.label)}</span>
              <button class="yc-clear" onclick="clearYieldMode()">✕ cancelar</button>
            </div>`
@@ -566,7 +566,7 @@ function renderRecipe() {
         <input class="sp-qty" id="qty-inp" type="number" value="${S.target ?? baseQty ?? ''}"
           min="0" step="any"
           onchange="changeTarget(this.value)"
-          oninput="changeTarget(this.value)">
+          onkeydown="if(event.key==='Enter')changeTarget(this.value)">
         <span class="sp-unit">${baseIng ? esc(baseIng.unit) : ''}</span>
         <span class="sp-factor ${factor === 1 ? 'base' : ''}">${factor === 1 ? '1×' : (factor >= 1 ? '×' : '×') + factor.toFixed(2).replace(/\.?0+$/,'')}</span>
         <button class="sp-reset" onclick="resetScale()">Reset</button>
