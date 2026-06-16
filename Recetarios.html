@@ -528,7 +528,7 @@ function renderRecipe() {
       ${isYieldMode
         ? `<div class="yc-input-row" onclick="event.stopPropagation()">
              <input class="yc-input" id="yi-inp" type="number" value="${S.targetYield}" min="1"
-               onchange="setYieldTarget(this.value)" onkeydown="if(event.key==='Enter')setYieldTarget(this.value)">
+               oninput="setYieldTarget(this.value)" onchange="setYieldTarget(this.value)">
              <span class="yc-unit" style="font-size:13px">${esc(y.label)}</span>
              <button class="yc-clear" onclick="clearYieldMode()">✕ cancelar</button>
            </div>`
@@ -565,8 +565,7 @@ function renderRecipe() {
         <span class="sp-label">Cantidad:</span>
         <input class="sp-qty" id="qty-inp" type="number" value="${S.target ?? baseQty ?? ''}"
           min="0" step="any"
-          onchange="changeTarget(this.value)"
-          onkeydown="if(event.key==='Enter')changeTarget(this.value)">
+          oninput="changeTarget(this.value)" onchange="changeTarget(this.value)">
         <span class="sp-unit">${baseIng ? esc(baseIng.unit) : ''}</span>
         <span class="sp-factor ${factor === 1 ? 'base' : ''}">${factor === 1 ? '1×' : (factor >= 1 ? '×' : '×') + factor.toFixed(2).replace(/\.?0+$/,'')}</span>
         <button class="sp-reset" onclick="resetScale()">Reset</button>
@@ -597,6 +596,7 @@ function renderRecipe() {
     subHtml += `<div class="sub-section">${hdr}${tbl}${prep}</div>`;
   }
 
+  const _focusId = document.activeElement?.id;
   rv.innerHTML = `
     <div class="rv-hdr">
       <div class="rv-breadcrumb">${esc(bookLabel)}</div>
@@ -607,6 +607,10 @@ function renderRecipe() {
       ${scalePanelHtml}
       ${subHtml}
     </div>`;
+  if (_focusId) {
+    const el = document.getElementById(_focusId);
+    if (el) { el.focus(); const len = el.value.length; el.setSelectionRange(len, len); }
+  }
 }
 
 /* ── Scale controls ──────────────────────────── */
